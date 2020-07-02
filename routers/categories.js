@@ -1,5 +1,5 @@
 var express = require("express");
-var Categories = require("../models/categories");
+var Categories = require("./models/categories");
 
 var categoryRouter = express.Router();
 
