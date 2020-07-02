@@ -4,7 +4,7 @@ var Accounts = require("../models/accounts");
 var accountRouter = express.Router();
 
 accountRouter
-  .route("/Account")
+  .route("/")
   .post(function (req, res) {
     var item = new Accounts(req.body);
 
@@ -18,12 +18,13 @@ accountRouter
         res.status(500).send(error);
         return;
       }
-      res.json(items);
+
+      res.json(items.reverse());
     });
   });
 
 accountRouter
-  .route("/Account/:accountID")
+  .route("/:accountID")
   .get(function (req, res) {
     var accountID = req.params.accountID;
 
@@ -91,20 +92,39 @@ accountRouter
       }
     });
   });
-accountRouter.route("/Account/page/:p/:l").get(function (req, res) {
+accountRouter.route("/page/:p/:l").get(function (req, res) {
   let p = Number.parseInt(req.params.p);
   let l = Number.parseInt(req.params.l);
-
   Accounts.find()
+    .sort({ createdAt: -1 })
     .skip((p - 1) * l)
     .limit(l)
-    .exec((err, item) => {
+    .exec((err, items) => {
       if (err) {
         res.status(500).send(err);
         return;
       }
-      console.log(item);
-      res.json(item);
+      res.json(items);
     });
 });
+accountRouter.route("/get/length").get(function (req, res) {
+  Accounts.find().exec((err, items) => {
+    if (err) {
+      res.status(500).send(err);
+      return;
+    }
+    res.json(items.length);
+  });
+});
+
+accountRouter.route("/search/:name/:value").get(function (req, res) {
+  let name = req.params.name;
+  let value = req.params.value;
+  
+  Accounts.find({[name]: new RegExp(value, "i")}, function(err, doc) {
+    res.json(doc)
+  });
+ 
+});
+
 module.exports = accountRouter;

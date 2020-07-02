@@ -4,7 +4,7 @@ var Bills = require("../models/bills");
 var billRouter = express.Router();
 
 billRouter
-  .route("/bills")
+  .route("/")
   .post(function (req, res) {
     var item = new Bills(req.body);
 
@@ -23,7 +23,7 @@ billRouter
   });
 
 billRouter
-  .route("/bills/:billID")
+  .route("/:billID")
   .get(function (req, res) {
     var billID = req.params.billID;
 
@@ -91,5 +91,21 @@ billRouter
       }
     });
   });
+billRouter.route("/get/length").get(function (req, res) {
+  Bills.find().exec((err, items) => {
+    if (err) {
+      res.status(500).send(err);
+      return;
+    }
+    res.json(items.length);
+  });
+});
+billRouter.route("/search/:name/:value").get(function (req, res) {
+  let name = req.params.name;
+  let value = req.params.value;
+  Bills.find({ [name]: new RegExp(value, "i") }, function (err, doc) {
+    res.json(doc);
+  });
+});
 
 module.exports = billRouter;

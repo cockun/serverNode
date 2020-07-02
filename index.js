@@ -34,9 +34,9 @@ app.use(
   })
 );
 
-app.use("/", Accounts);
-app.use("/", Products);
-app.use("/", Bills);
+app.use("/Account", Accounts);
+app.use("/Products", Products);
+app.use("/Bill", Bills);
 //app.use("/", Categories);
 app.use(function (req, res) {
   res.status(404).send({ url: req.originalUrl + "not found" });
