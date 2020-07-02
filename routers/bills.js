@@ -108,4 +108,19 @@ billRouter.route("/search/:name/:value").get(function (req, res) {
   });
 });
 
+billRouter.route("/page/:p/:l").get(function (req, res) {
+  let p = Number.parseInt(req.params.p);
+  let l = Number.parseInt(req.params.l);
+  Bills.find()
+    .sort({ createdAt: -1 })
+    .skip((p - 1) * l)
+    .limit(l)
+    .exec((err, items) => {
+      if (err) {
+        res.status(500).send(err);
+        return;
+      }
+      res.json(items);
+    });
+});
 module.exports = billRouter;
