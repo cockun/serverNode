@@ -1,19 +1,19 @@
 var express = require("express");
-var Accounts = require("../models/accounts");
+var Categories = require("../models/categories");
 
-var accountRouter = express.Router();
+var categoryRouter = express.Router();
 
-accountRouter
-  .route("/Account")
+categoryRouter
+  .route("/categories")
   .post(function (req, res) {
-    var item = new Accounts(req.body);
+    var item = new Categories(req.body);
 
     item.save();
 
     res.status(201).send(item);
   })
-  .get(function (request, res) {
-    Accounts.find(function (error, items) {
+  .get(function (req, res) {
+    Categories.find(function (error, items) {
       if (error) {
         res.status(500).send(error);
         return;
@@ -22,12 +22,12 @@ accountRouter
     });
   });
 
-accountRouter
-  .route("/Account/:accountID")
+categoryRouter
+  .route("/categories/:categoryID")
   .get(function (req, res) {
-    var accountID = req.params.accountID;
+    var categoryID = req.params.categoryID;
 
-    Accounts.findOne({ _id: accountID }, function (error, item) {
+    Categories.findOne({ _id: categoryID }, function (error, item) {
       if (error) {
         res.status(500).send(error);
         return;
@@ -37,9 +37,9 @@ accountRouter
     });
   })
   .put(function (req, res) {
-    var accountID = req.params.accountID;
+    var categoryID = req.params.categoryID;
 
-    Accounts.findOne({ _id: accountID }, function (error, item) {
+    Categories.findOne({ _id: categoryID }, function (error, item) {
       if (error) {
         res.status(500).send(error);
         return;
@@ -59,15 +59,15 @@ accountRouter
       }
 
       res.status(404).json({
-        message: "Accounts with id " + accountID + " was not found.",
+        message: "Categories with id " + categoryID + " was not found.",
       });
     });
   })
 
   .delete(function (req, res) {
-    var accountID = req.params.accountID;
+    var categoryID = req.params.categoryID;
 
-    Accounts.findOne({ _id: accountID }, function (error, item) {
+    Categories.findOne({ _id: categoryID }, function (error, item) {
       if (error) {
         res.status(500).send(error);
         return;
@@ -91,20 +91,5 @@ accountRouter
       }
     });
   });
-accountRouter.route("/Account/page/:p/:l").get(function (req, res) {
-  let p = Number.parseInt(req.params.p);
-  let l = Number.parseInt(req.params.l);
 
-  Accounts.find()
-    .skip((p - 1) * l)
-    .limit(l)
-    .exec((err, item) => {
-      if (err) {
-        res.status(500).send(err);
-        return;
-      }
-      console.log(item);
-      res.json(item);
-    });
-});
-module.exports = accountRouter;
+module.exports = categoryRouter;
