@@ -5,7 +5,8 @@ const mongoose = require("mongoose");
 var Products = require("./routers/products");
 var Bills = require("./routers/bills");
 var Accounts = require("./routers/accounts");
-var Categories = require("./routers/categories");
+
+//var Categories = require("./routers/categories");
 
 const { json } = require("express");
 var bill = require("./models/bills");
@@ -36,7 +37,7 @@ app.use(
 app.use("/", Accounts);
 app.use("/", Products);
 app.use("/", Bills);
-app.use("/", Categories);
+//app.use("/", Categories);
 app.use(function (req, res) {
   res.status(404).send({ url: req.originalUrl + "not found" });
 });
