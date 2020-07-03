@@ -121,21 +121,27 @@ accountRouter.route("/get/length").get(function (req, res) {
 accountRouter.route("/search/:name/:value").get(function (req, res) {
   let name = req.params.name;
   let value = req.params.value;
-  
-  Accounts.find({[name]: new RegExp(value, "i")}, function(err, doc) {
-    res.json(doc)
+
+  Accounts.find({ [name]: new RegExp(value, "i") }, function (err, doc) {
+    res.json(doc);
   });
- 
 });
 
 accountRouter.route("/checkUser/:name/:pass").get(function (req, res) {
   let name = req.params.name;
   let pass = req.params.pass;
-  Accounts.findOne({name: name, password : pass},function(error,item){
-   
-    console.log(item)
-    res.json(item)
-  })
+  Accounts.findOne({ name: name, password: pass }, function (error, item) {
+    console.log(item);
+    res.json(item);
+  });
+});
+accountRouter.route("/checkUser/:name").get(function (req, res) {
+  let name = req.params.name;
+
+  Accounts.findOne({ name: name }, function (error, item) {
+    console.log(item);
+    res.json(item);
+  });
 });
 
 module.exports = accountRouter;
