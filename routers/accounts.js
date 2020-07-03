@@ -1,5 +1,6 @@
 var express = require("express");
 var Accounts = require("../models/accounts");
+const { response } = require("express");
 
 var accountRouter = express.Router();
 
@@ -125,6 +126,16 @@ accountRouter.route("/search/:name/:value").get(function (req, res) {
     res.json(doc)
   });
  
+});
+
+accountRouter.route("/checkUser/:name/:pass").get(function (req, res) {
+  let name = req.params.name;
+  let pass = req.params.pass;
+  Accounts.findOne({name: name, password : pass},function(error,item){
+   
+    console.log(item)
+    res.json(item)
+  })
 });
 
 module.exports = accountRouter;

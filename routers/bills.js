@@ -125,7 +125,18 @@ billRouter.route("/page/:p/:l").get(function (req, res) {
 });
 billRouter.route("/filter/:fromDate/:toDate").get(function (req, res) {
   let fromDate = new Date(req.params.fromDate);
+
   let toDate = new Date(req.params.toDate);
-  Bills.find({ createdAt: { $gte: fromDate, $lt: toDate } });
+  toDate.setDate(toDate.getDate()+1)
+  
+  console.log(fromDate);
+  console.log(toDate);
+
+  Bills.find({
+    createdAt: { $gte: fromDate, $lt: toDate },
+  }).exec((err, items) => {
+    console.log(items)
+    res.json(items);
+  });
 });
 module.exports = billRouter;
