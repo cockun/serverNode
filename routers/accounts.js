@@ -131,7 +131,6 @@ accountRouter.route("/checkUser/:name/:pass").get(function (req, res) {
   let name = req.params.name;
   let pass = req.params.pass;
   Accounts.findOne({ name: name, password: pass }, function (error, item) {
-    console.log(item);
     res.json(item);
   });
 });
@@ -139,8 +138,15 @@ accountRouter.route("/checkUser/:name").get(function (req, res) {
   let name = req.params.name;
 
   Accounts.findOne({ name: name }, function (error, item) {
-    console.log(item);
-    res.json(item);
+    if(error){
+      res.json(error)
+      return;
+    }
+    if(item){
+      res.json(1);
+    }else{
+      res.json(item)
+    }
   });
 });
 
