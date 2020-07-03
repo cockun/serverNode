@@ -123,14 +123,15 @@ productRouter.route("/search/:name/:value").get(function (req, res) {
   Products.find({[name]: new RegExp(value, "i")}, function(err, doc) {
     res.json(doc)
   });
-  // Products.find().where('name').
-  // .exec((err, items) => {
-  //   if (err) {
-  //     res.status(500).send(err);
-  //     return;
-  //   }
-  //   res.json(items);
-  // });
+ 
 });
+
+productRouter.route("/delete/many").get(function (req, res) {
+console.log('a')
+  Products.remove()
+ 
+ 
+});
+
 
 module.exports = productRouter;

@@ -9,5 +9,5 @@ var billsSchema = new Schema({
   phone: String,
   address: {type:String,default:''},
   name: {type:String,default:''},
-});
+},{timestamps:true});
 module.exports = mongoose.model("Bills", billsSchema);

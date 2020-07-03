@@ -123,4 +123,9 @@ billRouter.route("/page/:p/:l").get(function (req, res) {
       res.json(items);
     });
 });
+billRouter.route("/filter/:fromDate/:toDate").get(function (req, res) {
+  let fromDate = new Date(req.params.fromDate);
+  let toDate = new Date(req.params.toDate);
+  Bills.find({ createdAt: { $gte: fromDate, $lt: toDate } });
+});
 module.exports = billRouter;
