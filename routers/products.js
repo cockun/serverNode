@@ -126,12 +126,6 @@ productRouter.route("/search/:name/:value").get(function (req, res) {
  
 });
 
-productRouter.route("/delete/many").get(function (req, res) {
-console.log('a')
-  Products.remove()
- 
- 
-});
 
 
 module.exports = productRouter;
