@@ -5,7 +5,7 @@ var AccountsSchema = new Schema({
   name: { type: String },
   password: {type:String,default:"1"},
   fullname: String,
-  phone: Number,
+  phone: String,
   address: { type: String, default: "" },
   author: { type: String, default: "1" },
 });
